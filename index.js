@@ -11,4 +11,14 @@ registerButton.onclick = function onSubmit() {
 
 config.forEach((confItem) => {
   fieldsMap.section(confItem);
+  confItem.fields.forEach((field) => {
+    if (field.type === 'text') {
+      fieldsMap.text(field);
+    }
+    products.forEach((product) => {
+      if (field.id === product.id) {
+        fieldsMap.product(product);
+      }
+    });
+  });
 });

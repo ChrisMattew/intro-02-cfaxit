@@ -1,5 +1,3 @@
-import { products } from './config';
-
 const createSection = (section) => {
   let container = document.createElement('div');
   let title = document.createElement('h1');
@@ -12,51 +10,42 @@ const createSection = (section) => {
   container.appendChild(title);
   container.appendChild(description);
 
-  container.appendChild(createTextField(section.fields));
-  container.appendChild(createProductField(section.fields));
-
   document.querySelector('#form-wrapper').appendChild(container);
 };
 
 const createTextField = (textField, onChange) => {
   let inpTxtBox = document.createElement('div');
-  textField.forEach((field) => {
-    if (field.type === 'text') {
-      let labelTxt = document.createElement('label');
-      let inputTxt = document.createElement('input');
-      labelTxt.innerText = field.label;
-      inputTxt.id = field.id;
-      inputTxt.type = field.type;
 
-      inpTxtBox.appendChild(labelTxt);
-      inpTxtBox.appendChild(inputTxt);
-    }
-  });
+  let labelTxt = document.createElement('label');
+  let inputTxt = document.createElement('input');
+  labelTxt.innerText = textField.label;
+  inputTxt.id = textField.id;
+  inputTxt.type = textField.type;
 
-  return inpTxtBox;
+  inpTxtBox.appendChild(labelTxt);
+  inpTxtBox.appendChild(inputTxt);
+
+  document.querySelector("#form-wrapper").appendChild(inpTxtBox);
 };
 
 const createProductField = (product, onClick) => {
   let productBox = document.createElement('div');
 
-  product.forEach((prod) => {
-    if (prod.type !== 'text') {
-      let checkBox = document.createElement('input');
-      let productPrice = document.createElement('div');
-      let productTitle = document.createElement('div');
+  let checkBox = document.createElement('input');
+  let productTitle = document.createElement('div');
+  let productPrice = document.createElement('div');
+  
 
-      checkBox.type = 'checkbox';
-      checkBox.id = prod.id;
-      productPrice.innerText = prod.price + '€';
-      productTitle.innerText = prod.title;
+  checkBox.type = 'checkbox';
+  checkBox.id = product.id;
+  productPrice.innerText = product.price + '€';
+  productTitle.innerText = product.title;
 
-      productBox.appendChild(checkBox);
-      productBox.appendChild(productTitle);
-      productBox.appendChild(productPrice);
-    }
-  });
+  productBox.appendChild(checkBox);
+  productBox.appendChild(productTitle);
+  productBox.appendChild(productPrice);
 
-  return productBox;
+  document.querySelector("#form-wrapper").appendChild(productBox);
 };
 
 export const fieldsMap = {
