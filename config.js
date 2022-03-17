@@ -4,8 +4,8 @@ export const config = [
     description:
       'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     fields: [
-      { label: 'Name', id: 'name', type: 'text' },
-      { label: 'Surname', id: 'surname', type: 'text' },
+      { label: 'First name', id: 'name', type: 'text' },
+      { label: 'Last name', id: 'surname', type: 'text' },
       { label: 'Email', id: 'email', type: 'text' },
       { label: 'Address', id: 'address', type: 'text' },
     ],

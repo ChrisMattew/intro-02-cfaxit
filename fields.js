@@ -25,6 +25,7 @@ const createTextField = (textField, onChange) => {
   inpTxtBox.setAttribute('class', 'input-box');
 
   labelTxt.textContent = textField.label;
+  labelTxt.setAttribute('for', textField.id);
   inputTxt.id = textField.id;
   inputTxt.type = textField.type;
 
@@ -49,6 +50,7 @@ const createProductField = (product, onClick) => {
   checkBox.id = product.id;
   productPrice.textContent = product.price + '€';
   productTitle.textContent = product.title;
+  productTitle.setAttribute('for', product.id);
 
   checkBoxTitleContainer.appendChild(checkBox);
   checkBoxTitleContainer.appendChild(productTitle);
