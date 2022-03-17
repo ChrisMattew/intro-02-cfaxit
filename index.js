@@ -14,10 +14,12 @@ config.forEach((confItem) => {
   confItem.fields.forEach((field) => {
     if (field.type === 'text') {
       fieldsMap.text(field);
+      return false;
     }
     products.forEach((product) => {
       if (field.id === product.id) {
         fieldsMap.product(product);
+        return false;
       }
     });
   });

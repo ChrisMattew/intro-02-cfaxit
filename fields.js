@@ -1,6 +1,6 @@
 const createSection = (section) => {
   let container = document.createElement('div');
-  let title = document.createElement('h1');
+  let title = document.createElement('h2');
   let description = document.createElement('p');
 
   title.textContent = section.title;
@@ -18,34 +18,38 @@ const createTextField = (textField, onChange) => {
 
   let labelTxt = document.createElement('label');
   let inputTxt = document.createElement('input');
-  labelTxt.innerText = textField.label;
+  labelTxt.textContent = textField.label;
   inputTxt.id = textField.id;
   inputTxt.type = textField.type;
 
   inpTxtBox.appendChild(labelTxt);
   inpTxtBox.appendChild(inputTxt);
 
-  document.querySelector("#form-wrapper").appendChild(inpTxtBox);
+  document.querySelector('#form-wrapper').appendChild(inpTxtBox);
 };
 
 const createProductField = (product, onClick) => {
   let productBox = document.createElement('div');
-
+  let checkBoxTitleContainer = document.createElement('div');
   let checkBox = document.createElement('input');
-  let productTitle = document.createElement('div');
+  let productTitle = document.createElement('label');
   let productPrice = document.createElement('div');
-  
+
+  checkBoxTitleContainer.setAttribute('class', 'checkbox-box');
+  productBox.setAttribute('class', 'product-row');
+  productPrice.setAttribute('class', 'price-box');
 
   checkBox.type = 'checkbox';
   checkBox.id = product.id;
-  productPrice.innerText = product.price + '€';
-  productTitle.innerText = product.title;
+  productPrice.textContent = product.price + '€';
+  productTitle.textContent = product.title;
 
-  productBox.appendChild(checkBox);
-  productBox.appendChild(productTitle);
+  checkBoxTitleContainer.appendChild(checkBox);
+  checkBoxTitleContainer.appendChild(productTitle);
+  productBox.appendChild(checkBoxTitleContainer);
   productBox.appendChild(productPrice);
 
-  document.querySelector("#form-wrapper").appendChild(productBox);
+  document.querySelector('#form-wrapper').appendChild(productBox);
 };
 
 export const fieldsMap = {
