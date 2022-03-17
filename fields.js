@@ -1,23 +1,29 @@
 const createSection = (section) => {
   let container = document.createElement('div');
+  let descriptionBox = document.createElement('div');
   let title = document.createElement('h2');
   let description = document.createElement('p');
 
+  container.setAttribute('class', 'section');
+  descriptionBox.setAttribute('class', 'description-box');
+
+  descriptionBox.appendChild(title);
+  descriptionBox.appendChild(description);
+  container.appendChild(descriptionBox);
+
   title.textContent = section.title;
   description.textContent = section.description;
-
-  container.setAttribute('class', 'section');
-  container.appendChild(title);
-  container.appendChild(description);
 
   return container;
 };
 
 const createTextField = (textField, onChange) => {
   let inpTxtBox = document.createElement('div');
-
   let labelTxt = document.createElement('label');
   let inputTxt = document.createElement('input');
+
+  inpTxtBox.setAttribute('class', 'input-box');
+
   labelTxt.textContent = textField.label;
   inputTxt.id = textField.id;
   inputTxt.type = textField.type;
@@ -40,7 +46,7 @@ const createProductField = (product, onClick) => {
   productPrice.setAttribute('class', 'price-box');
 
   checkBox.type = 'checkbox';
-  checkBox.id = product.title.replace(' ', '');
+  checkBox.id = product.id;
   productPrice.textContent = product.price + '€';
   productTitle.textContent = product.title;
 
