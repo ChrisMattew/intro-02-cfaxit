@@ -5,9 +5,20 @@ import './style.css';
 const formNode = document.getElementById('dynamic-form');
 const registerButton = document.getElementById('register-button');
 
-registerButton.onclick = function onSubmit() {
-  // Register button
-};
+// registerButton.onclick = function onSubmit() {
+
+// };
+
+registerButton.addEventListener('click', (e) => {
+  e.preventDefault();
+  var data = {};
+  var inputs = document.querySelectorAll('input');
+  inputs.forEach((input) => {
+    data[input.id] = input.value;
+  });
+
+  alert(JSON.stringify(data));
+});
 
 config.forEach((confItem) => {
   fieldsMap.section(confItem);
