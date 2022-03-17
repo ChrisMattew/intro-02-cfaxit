@@ -20,11 +20,9 @@ registerButton.onclick = function onSubmit() {
 config.forEach((confItem) => {
   let section = fieldsMap.section(confItem);
   formNode.appendChild(section);
-  console.log(section);
   confItem.fields.forEach((field) => {
     if (field.type === 'text') {
       let textField = fieldsMap.text(field);
-      console.log(textField);
       section.appendChild(textField);
       return;
     }

@@ -40,7 +40,7 @@ const createProductField = (product, onClick) => {
   productPrice.setAttribute('class', 'price-box');
 
   checkBox.type = 'checkbox';
-  checkBox.id = product.id;
+  checkBox.id = product.title.replace(' ', '');
   productPrice.textContent = product.price + '€';
   productTitle.textContent = product.title;
 
