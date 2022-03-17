@@ -2,7 +2,7 @@ import { config, products, validationRules } from './config';
 import { fieldsMap } from './fields';
 import './style.css';
 
-const formNode = document.getElementById('dynamic-form');
+const formNode = document.getElementById('form-wrapper');
 const registerButton = document.getElementById('register-button');
 
 registerButton.onclick = function onSubmit() {
@@ -11,21 +11,28 @@ registerButton.onclick = function onSubmit() {
   inputs.forEach((input) => {
     data[input.id] = input.value;
   });
-  let o = Object.fromEntries(Object.entries(data).filter(([_, v]) => v != ''));
-  alert(JSON.stringify(o));
+  let newData = Object.fromEntries(
+    Object.entries(data).filter(([_, v]) => v != '')
+  );
+  alert(JSON.stringify(newData));
 };
 
 config.forEach((confItem) => {
-  fieldsMap.section(confItem);
+  let section = fieldsMap.section(confItem);
+  formNode.appendChild(section);
+  console.log(section);
   confItem.fields.forEach((field) => {
     if (field.type === 'text') {
-      fieldsMap.text(field);
-      return false;
+      let textField = fieldsMap.text(field);
+      console.log(textField);
+      section.appendChild(textField);
+      return;
     }
     products.forEach((product) => {
       if (field.id === product.id) {
-        fieldsMap.product(product);
-        return false;
+        let productField = fieldsMap.product(product);
+        section.appendChild(productField);
+        return;
       }
     });
   });

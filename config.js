@@ -62,6 +62,6 @@ export const products = [
 
 export const validationRules = [
   ['email', { required: true, includes: '@', min: 5 }],
-  ['name', { required: true, min: 5 }],
+  ['name', { required: true, min: 3 }],
   ['surname', { required: true }],
 ];

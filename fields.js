@@ -10,7 +10,7 @@ const createSection = (section) => {
   container.appendChild(title);
   container.appendChild(description);
 
-  document.querySelector('#form-wrapper').appendChild(container);
+  return container;
 };
 
 const createTextField = (textField, onChange) => {
@@ -25,7 +25,7 @@ const createTextField = (textField, onChange) => {
   inpTxtBox.appendChild(labelTxt);
   inpTxtBox.appendChild(inputTxt);
 
-  document.querySelector('#form-wrapper').appendChild(inpTxtBox);
+  return inpTxtBox;
 };
 
 const createProductField = (product, onClick) => {
@@ -49,7 +49,7 @@ const createProductField = (product, onClick) => {
   productBox.appendChild(checkBoxTitleContainer);
   productBox.appendChild(productPrice);
 
-  document.querySelector('#form-wrapper').appendChild(productBox);
+  return productBox;
 };
 
 export const fieldsMap = {
