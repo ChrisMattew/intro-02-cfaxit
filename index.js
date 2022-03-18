@@ -4,34 +4,68 @@ import './style.css';
 
 const formNode = document.getElementById('form-wrapper');
 const registerButton = document.getElementById('register-button');
+const data = {};
+const onChange = (id, value) => {
+  !data[id] ? (data[id] = value) : delete data[id];
+};
+const onClick = (product) => {
+  if (!data.products) data.products = [];
 
-registerButton.onclick = function onSubmit() {
-  var data = {};
-  var inputs = document.querySelectorAll('input');
-  inputs.forEach((input) => {
-    data[input.id] = input.value;
+  if (data.products.includes(product)) {
+    data.products = data.products.filter((item) => {
+      return item != product;
+    });
+  } else {
+    data.products.push(product);
+  }
+};
+const isValid = (value, rules) => {
+  const rulesArray = Object.entries(rules);
+
+  return rulesArray.every(([ruleType, ruleValue]) => {
+    if (ruleType === 'required' && ruleValue) {
+      return !!value;
+    }
+    if (ruleType === 'includes') {
+      return value.includes(ruleValue);
+    }
+    if (ruleType === 'min') {
+      return value.length >= ruleValue;
+    }
+    return true;
   });
-  let newData = Object.fromEntries(
-    Object.entries(data).filter(([_, v]) => v != '')
-  );
-  alert(JSON.stringify(newData));
 };
 
 config.forEach((confItem) => {
   let section = fieldsMap.section(confItem);
   formNode.appendChild(section);
   confItem.fields.forEach((field) => {
-    if (field.type === 'text') {
-      let textField = fieldsMap.text(field);
-      section.appendChild(textField);
-      return;
-    }
-    products.forEach((product) => {
-      if (field.id === product.id) {
-        let productField = fieldsMap.product(product);
+    switch (field.type) {
+      case 'text':
+        let textField = fieldsMap.text(field, onChange);
+        section.appendChild(textField);
+        break;
+      case 'product':
+        const allProducts = products.find((product) => product.id === field.id);
+        let productField = fieldsMap.product(allProducts, onClick);
         section.appendChild(productField);
-        return;
-      }
-    });
+        break;
+    }
   });
 });
+
+registerButton.onclick = function onSubmit(e) {
+  e.preventDefault();
+
+  alert(Object.entries(data).join('\n').replace(/,/g, ': '));
+};
+
+function validationFields() {
+  invalidFields = [];
+  validationRules.forEach(function ([id, value]) {
+    if (!isValid(data[id], value)) {
+      invalidFields.push(id);
+    }
+    return invalidFields;
+  });
+}
