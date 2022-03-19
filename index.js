@@ -7,6 +7,7 @@ const registerButton = document.getElementById('register-button');
 const data = {};
 const onChange = (id, value) => {
   value.trim() !== '' ? (data[id] = value) : delete data[id];
+  console.log(data);
 };
 const onClick = (product) => {
   if (!data.products) data.products = [];
@@ -15,6 +16,7 @@ const onClick = (product) => {
     data.products = data.products.filter((item) => {
       return item != product;
     });
+    if (!data.products.length) delete data.products;
   } else {
     data.products.push(product);
   }
@@ -56,17 +58,24 @@ config.forEach((confItem) => {
 
 registerButton.onclick = function onSubmit(e) {
   e.preventDefault();
-  validationFields();
-  console.log(isValid(data, validationRules));
-  console.log(Object.entries(data).join('\n').replace(/,/g, ': '));
+  let invalidFields = validationFields();
+  alert(Object.entries(data).join('\n').replace(/,/g, ': '));
 };
 
 function validationFields() {
   let invalidFields = [];
   validationRules.forEach(function ([id, value]) {
     if (!isValid([id], value)) {
-      invalidFields.push(id);
+      invalidFields.push({ id: id });
     }
-    return invalidFields;
   });
+  if (invalidFields.length) {
+    invalidFields.forEach((field) => {
+      let invalidField = document.querySelector(`[name=${field}]`);
+      invalidField.setCustomValidity('The field is not valid');
+    });
+    return false;
+  } else {
+    return true;
+  }
 }

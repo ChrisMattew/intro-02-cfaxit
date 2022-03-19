@@ -32,10 +32,9 @@ const createTextField = (textField, onChange) => {
   inpTxtBox.appendChild(labelTxt);
   inpTxtBox.appendChild(inputTxt);
 
-  inputTxt.addEventListener('change', onChangeValue);
-  function onChangeValue() {
+  inputTxt.addEventListener('change', function () {
     onChange(textField.id, this.value);
-  }
+  });
 
   return inpTxtBox;
 };
@@ -62,11 +61,9 @@ const createProductField = (product, onClick) => {
   productBox.appendChild(checkBoxTitleContainer);
   productBox.appendChild(productPrice);
 
-  checkBox.addEventListener('change', onClickCB);
-
-  function onClickCB() {
+  checkBox.addEventListener('change', ()=>{
     onClick(product);
-  }
+  });
   return productBox;
 };
 
