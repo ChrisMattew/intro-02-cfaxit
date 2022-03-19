@@ -6,7 +6,7 @@ const formNode = document.getElementById('form-wrapper');
 const registerButton = document.getElementById('register-button');
 const data = {};
 const onChange = (id, value) => {
-  !data[id] ? (data[id] = value) : delete data[id];
+  value.trim() !== '' ? (data[id] = value) : delete data[id];
 };
 const onClick = (product) => {
   if (!data.products) data.products = [];
@@ -56,14 +56,15 @@ config.forEach((confItem) => {
 
 registerButton.onclick = function onSubmit(e) {
   e.preventDefault();
-
-  alert(Object.entries(data).join('\n').replace(/,/g, ': '));
+  validationFields();
+  console.log(isValid(data, validationRules));
+  console.log(Object.entries(data).join('\n').replace(/,/g, ': '));
 };
 
 function validationFields() {
-  invalidFields = [];
+  let invalidFields = [];
   validationRules.forEach(function ([id, value]) {
-    if (!isValid(data[id], value)) {
+    if (!isValid([id], value)) {
       invalidFields.push(id);
     }
     return invalidFields;
