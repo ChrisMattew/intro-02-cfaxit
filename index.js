@@ -5,34 +5,46 @@ import './style.css';
 const formNode = document.getElementById('form-wrapper');
 const registerButton = document.getElementById('register-button');
 const data = {};
+let invalidFields = [];
+let sum = 0;
+
 const onChange = (id, value) => {
   value.trim() !== '' ? (data[id] = value) : delete data[id];
-  console.log(data);
 };
 const onClick = (product) => {
   if (!data.products) data.products = [];
 
-  if (data.products.includes(product)) {
+  if (data.products.includes(product.title)) {
+    sum -= product.price;
     data.products = data.products.filter((item) => {
-      return item != product;
+      return item != product.title;
     });
     if (!data.products.length) delete data.products;
   } else {
-    data.products.push(product);
+    data.products.push(product.title);
+    sum += product.price;
   }
 };
-const isValid = (value, rules) => {
-  const rulesArray = Object.entries(rules);
 
-  return rulesArray.every(([ruleType, ruleValue]) => {
+const isValid = (ruleId, rules, invalidFields) => {
+  const rulesArray = Object.entries(rules);
+  rulesArray.every(([ruleType, ruleValue]) => {
     if (ruleType === 'required' && ruleValue) {
-      return !!value;
+      if (!data[ruleId]) invalidFields.push(` ${ruleId} is a required field`);
+      return !!data[ruleId];
     }
     if (ruleType === 'includes') {
-      return value.includes(ruleValue);
+      data[ruleId].includes(ruleValue)
+        ? true
+        : invalidFields.push(`${ruleId} must include ${ruleValue}`);
+      return !!data[ruleId].includes(ruleValue);
     }
     if (ruleType === 'min') {
-      return value.length >= ruleValue;
+      if (data[ruleId].length < ruleValue)
+        invalidFields.push(
+          `${ruleId} must be at least ${ruleValue} characters long`
+        );
+      return !!data[ruleId].length >= ruleValue;
     }
     return true;
   });
@@ -58,24 +70,20 @@ config.forEach((confItem) => {
 
 registerButton.onclick = function onSubmit(e) {
   e.preventDefault();
-  let invalidFields = validationFields();
-  alert(Object.entries(data).join('\n').replace(/,/g, ': '));
+  validationFields();
+  if (invalidFields.length) {
+    alert(invalidFields);
+    invalidFields = [];
+  } else {
+    let registration = Object.entries(data).join('\n').replace(/,/g, ': ');
+    alert(
+      `Thanks for registering!!! \n\n` + registration + `\n\n Total: ${sum}€`
+    );
+  }
 };
 
 function validationFields() {
-  let invalidFields = [];
-  validationRules.forEach(function ([id, value]) {
-    if (!isValid([id], value)) {
-      invalidFields.push({ id: id });
-    }
+  validationRules.forEach(function ([id, rule]) {
+    isValid([id], rule, invalidFields);
   });
-  if (invalidFields.length) {
-    invalidFields.forEach((field) => {
-      let invalidField = document.querySelector(`[name=${field}]`);
-      invalidField.setCustomValidity('The field is not valid');
-    });
-    return false;
-  } else {
-    return true;
-  }
 }

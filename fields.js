@@ -27,6 +27,7 @@ const createTextField = (textField, onChange) => {
   labelTxt.textContent = textField.label;
   labelTxt.setAttribute('for', textField.id);
   inputTxt.id = textField.id;
+  inputTxt.name = textField.id;
   inputTxt.type = textField.type;
 
   inpTxtBox.appendChild(labelTxt);
@@ -52,6 +53,7 @@ const createProductField = (product, onClick) => {
 
   checkBox.type = 'checkbox';
   checkBox.id = product.id;
+  checkBox.name = product.id;
   productPrice.textContent = product.price + '€';
   productTitle.textContent = product.title;
   productTitle.setAttribute('for', product.id);
@@ -61,7 +63,7 @@ const createProductField = (product, onClick) => {
   productBox.appendChild(checkBoxTitleContainer);
   productBox.appendChild(productPrice);
 
-  checkBox.addEventListener('change', ()=>{
+  checkBox.addEventListener('change', () => {
     onClick(product);
   });
   return productBox;
