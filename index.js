@@ -33,12 +33,6 @@ const isValid = (ruleId, rules, invalidFields) => {
       if (!data[ruleId]) invalidFields.push(` ${ruleId} is a required field`);
       return !!data[ruleId];
     }
-    if (ruleType === 'includes') {
-      data[ruleId].includes(ruleValue)
-        ? true
-        : invalidFields.push(`${ruleId} must include ${ruleValue}`);
-      return !!data[ruleId].includes(ruleValue);
-    }
     if (ruleType === 'min') {
       if (data[ruleId].length < ruleValue)
         invalidFields.push(
@@ -46,6 +40,13 @@ const isValid = (ruleId, rules, invalidFields) => {
         );
       return !!data[ruleId].length >= ruleValue;
     }
+    if (ruleType === 'includes') {
+      data[ruleId].includes(ruleValue)
+        ? true
+        : invalidFields.push(`${ruleId} must include ${ruleValue}`);
+      return !!data[ruleId].includes(ruleValue);
+    }
+
     return true;
   });
 };
